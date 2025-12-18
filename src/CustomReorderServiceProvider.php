@@ -1,14 +1,14 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Rapidez\CustomReorder;
 
 use Illuminate\Support\ServiceProvider;
 
-class SkeletonServiceProvider extends ServiceProvider
+class CustomReorderServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/rapidez/:package_slug_without_prefix.php', 'rapidez.:package_slug_without_prefix');
+        $this->mergeConfigFrom(__DIR__.'/../config/rapidez/custom-reorder.php', 'rapidez.custom-reorder');
     }
 
     public function boot()
@@ -30,7 +30,7 @@ class SkeletonServiceProvider extends ServiceProvider
 
     public function bootViews() : self
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-:package_slug_without_prefix');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-custom-reorder');
 
         return $this;
     }
@@ -38,12 +38,12 @@ class SkeletonServiceProvider extends ServiceProvider
     public function bootPublishables() : self
     {
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/rapidez-:package_slug_without_prefix'),
-        ], 'rapidez-:package_slug_without_prefix-views');
+            __DIR__.'/../resources/views' => resource_path('views/vendor/rapidez-custom-reorder'),
+        ], 'rapidez-custom-reorder-views');
 
         $this->publishes([
-            __DIR__.'/../config/rapidez/:package_slug_without_prefix.php' => config_path('rapidez/:package_slug_without_prefix.php'),
-        ], 'rapidez-:package_slug_without_prefix-config');
+            __DIR__.'/../config/rapidez/custom-reorder.php' => config_path('rapidez/custom-reorder.php'),
+        ], 'rapidez-custom-reorder-config');
 
         return $this;
     }
