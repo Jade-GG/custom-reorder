@@ -1,3 +1,5 @@
+@props(['component' => 'rapidez::button.conversion'])
+
 <div
     v-if="reorderSlotScope.reordering"
     {{ $attributes->class('border-t flex p-2 sticky bottom-0 bg-white items-center') }}
@@ -10,12 +12,13 @@
             @lang(':count products selected', ['count' => '@{{ reorderSlotScope.selectedItems.length }}'])
         </template>
     </div>
-    <x-rapidez::button.conversion
+    <x-dynamic-component
+        :$component
         class="ml-auto"
         v-bind:disabled="!reorderSlotScope.selectedItems.length || reorderSlotScope.adding"
         v-bind:class="{'button-loading': reorderSlotScope.adding}"
         v-on:click="reorderSlotScope.addToCart"
     >
         {{ $slot }}
-    </x-rapidez::button.conversion>
+    </x-dynamic-component>
 </div>
