@@ -1,6 +1,6 @@
-# Rapidez custom-reorder
+# Rapidez custom reorder
 
-Replaces the standard Rapidez re-order functionality with a custom variant
+This package allows you to replace the standard Rapidez re-order functionality with a custom variant. Note that this will require some manual work, see [usage](#usage).
 
 ## Installation
 
@@ -15,12 +15,9 @@ You can publish the config with:
 php artisan vendor:publish --tag=rapidez-custom-reorder-config
 ```
 
-## Views
+## Usage
 
-You can publish the views with:
-```
-php artisan vendor:publish --tag=rapidez-custom-reorder-views
-```
+This package will not work out of the box, however it contains a few blade components that will help make it easy.
 
 ## License
 
