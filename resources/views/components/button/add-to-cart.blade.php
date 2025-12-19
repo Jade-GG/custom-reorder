@@ -16,10 +16,6 @@
         v-bind:class="{'button-loading': reorderSlotScope.adding}"
         v-on:click="reorderSlotScope.addToCart"
     >
-        <template v-if="reorderSlotScope.added">@lang('Added')</template>
-        <template v-else>
-            <x-heroicon-s-shopping-cart class="size-5" />
-            @lang('Add to cart')
-        </template>
+        {{ $slot }}
     </x-rapidez::button.conversion>
 </div>
