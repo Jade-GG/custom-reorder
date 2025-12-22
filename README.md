@@ -17,6 +17,8 @@ php artisan vendor:publish --tag=rapidez-custom-reorder-config
 
 ## Usage
 
+> [!NOTE] You will need to make sure that the `SKU` field can be filtered by. This means that `Visible in Advanced Search` needs to be enabled on this attribute.
+
 This package will not work out of the box, however it contains a few blade components that will help make it easy. To set up this package you should do the following:
 
 - Wrap the `x-rapidez-reorder::reorderable` component around your products table with a `v-bind:items` containing your items. If you're not using the standard magento order data, ideally the items should be in the same format as [OrderItem in the GraphQL API](https://developer.adobe.com/commerce/webapi/graphql-api/index.html#definition-OrderItem), or in the same format as [CartItemInput](https://developer.adobe.com/commerce/webapi/graphql-api/index.html#definition-CartItemInput) (in this case you should add the `cart-items` prop). If you can't or won't add the `entered_options` and `selected_options`, any configurable items will be grayed out.
