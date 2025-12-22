@@ -1,13 +1,13 @@
-<label
-    class="flex gap-3"
+<div
+    class="flex gap-3 w-full"
     v-bind:class="{
-        'cursor-pointer': reorderSlotScope.reordering,
-        'opacity-50 !cursor-not-allowed': reorderSlotScope.reordering && !reorderSlotScope.matchingItems.includes(item.product_sku),
+        'opacity-50 !cursor-not-allowed': !reorderSlotScope.loading && !reorderSlotScope.matchingItems.includes(item.product_sku),
     }"
 >
-    <template v-if="reorderSlotScope.reordering && reorderSlotScope.canReorder(item)">
+    <template v-if="reorderSlotScope.canReorder(item)">
         <div class="flex items-center">
             <x-rapidez::input.checkbox
+                class="border-emphasis"
                 type="checkbox"
                 v-bind:value="item.product_sku"
                 v-bind:disabled="reorderSlotScope.adding || !reorderSlotScope.matchingItems.includes(item.product_sku)"
@@ -16,7 +16,7 @@
         </div>
     </template>
 
-    <div {{ $attributes }}>
+    <div {{ $attributes->class('w-full') }}>
         {{ $slot }}
     </div>
-</label>
+</div>

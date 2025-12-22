@@ -15,7 +15,7 @@ export default {
 
     data() {
         return {
-            reordering: false,
+            loading: true,
             selectedItems: [],
             matchingItems: [],
             unconfiguredItems: [],
@@ -25,12 +25,6 @@ export default {
     },
 
     mounted() {
-        this.$root.$on('reordering', () => {
-            this.reordering = true
-            // By default, select every selectable item
-            this.selectedItems = [...this.matchingItems]
-        })
-
         if (this.items) {
             this.getMatchingProducts()
         }
@@ -80,6 +74,8 @@ export default {
             this.unconfiguredItems = (response.data.products.items ?? [])
                 .filter(item => this.isUnconfigured(item))
                 .map(item => item.sku)
+
+            this.loading = false
         },
 
         isUnconfigured(currentItem) {
