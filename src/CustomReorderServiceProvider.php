@@ -2,7 +2,9 @@
 
 namespace Rapidez\CustomReorder;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Rapidez\CustomReorder\Http\ViewComposers\ConfigComposer;
 
 class CustomReorderServiceProvider extends ServiceProvider
 {
@@ -14,8 +16,16 @@ class CustomReorderServiceProvider extends ServiceProvider
     public function boot()
     {
         $this
+            ->bootComposers()
             ->bootViews()
             ->bootPublishables();
+    }
+
+    protected function bootComposers(): static
+    {
+        View::composer('rapidez::layouts.app', ConfigComposer::class);
+
+        return $this;
     }
 
     public function bootViews() : self
