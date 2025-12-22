@@ -4,6 +4,10 @@ import { mask as cartMask } from 'Vendor/rapidez/core/resources/js/stores/useMas
 export default {
     props: {
         items: Array,
+        cartItems: {
+            type: Boolean,
+            default: false,
+        }
     },
     render() {
         return this.$scopedSlots.default(this)
@@ -41,7 +45,7 @@ export default {
     methods: {
         canReorder(item) {
             let filters = window.config?.custom_reorder?.sku_filters ?? []
-            if (filters.some((filter) => item.product_sku.match(new RegExp(filter)))) {
+            if (filters.some((filter) => this.transformItem(item).sku.match(new RegExp(filter)))) {
                 return false
             }
 
@@ -49,7 +53,7 @@ export default {
         },
 
         async getMatchingProducts() {
-            let skus = this.items.map(item => item.product_sku)
+            let skus = this.transformedItems.map(item => item.sku)
             let response = await window.magentoGraphQL(
                 `query Products {
                     products(
@@ -79,7 +83,7 @@ export default {
                 return false
             }
 
-            let item = this.items.find(item => item.product_sku == currentItem.sku)
+            let item = this.transformedItems.find(item => item.sku == currentItem.sku))
             if (item && (item.entered_options || item.selected_options)) {
                 return false
             }
@@ -103,12 +107,8 @@ export default {
                     {
                         cartId: cartMask.value,
                         cartItems: this.selectedItems.map((sku) => {
-                            let item = this.items.find(item => item.product_sku == sku)
-                            return {
-                                ...item,
-                                'sku': item.product_sku,
-                                'quantity': item.quantity_ordered,
-                            }
+                            let item = this.transformedItems.find(item => item.sku == sku)
+                            return item
                         }),
                     },
                 )
@@ -122,6 +122,34 @@ export default {
             }
 
             this.adding = false
+        },
+
+        transformItem(item) {
+            if (!item) {
+                return null
+            }
+
+            // Only transform when the item is in OrderItem format
+            if (this.cartItems) {
+                return item
+            }
+
+            // Skip if already transformed
+            if (sku in item) {
+                return item
+            }
+
+            // TODO: Support selected_options and entered_options from quote item data
+            return {
+                quantity: item.quantity_ordered,
+                sku: item.product_sku,
+            }
+        },
+    },
+
+    computed: {
+        transformedItems() {
+            return this.items.map(this.transformItem)
         },
     },
 }

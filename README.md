@@ -28,7 +28,7 @@ This package will not work out of the box, however it contains a few blade compo
 @endsection
 ```
 
-- Wrap the `x-rapidez-reorder::reorderable` component around your products table with a `v-bind:items` containing your items. If you're not using the standard magento order data, ideally the items should be in the same format as [OrderItem in the GraphQL API](https://developer.adobe.com/commerce/webapi/graphql-api/index.html#definition-OrderItem). If you can't or won't add the `entered_options` and `selected_options`, any configurable items will be grayed out.
+- Wrap the `x-rapidez-reorder::reorderable` component around your products table with a `v-bind:items` containing your items. If you're not using the standard magento order data, ideally the items should be in the same format as [OrderItem in the GraphQL API](https://developer.adobe.com/commerce/webapi/graphql-api/index.html#definition-OrderItem), or in the same format as [CartItemInput](https://developer.adobe.com/commerce/webapi/graphql-api/index.html#definition-CartItemInput) (in this case you should add the `cart-items` prop). If you can't or won't add the `entered_options` and `selected_options`, any configurable items will be grayed out.
 
 - Then, wrap every individual item in your list with `x-rapidez-reorder::item` to allow the checkboxes and transparency to appear. Be aware that this wraps a `label` element around your item, which [may be impactful for any other interactive elements like anchor tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label#accessibility). This should end up looking something like this:
 ```blade
@@ -56,6 +56,10 @@ This package will not work out of the box, however it contains a few blade compo
 ```
 
 And that's it!
+
+## Notes
+
+- We don't currently have support for adding products to cart with custom options or configurations when using OrderItem-like data, as this requires directly matching labels. We're looking for a clean solution.
 
 ## License
 
