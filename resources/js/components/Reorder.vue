@@ -57,14 +57,18 @@ export default {
             let response = await window.magentoGraphQL(
                 `query Products {
                     products(
-                        filter: { sku: { in: [${skus.join(',')}] } }
+                        filter: { sku: { in: [${skus.map(sku => `"${sku}"`).join(',')}] } }
                         pageSize: 999
                         currentPage: 1
                     ) {
                         items {
                             sku
-                            options
                             __typename
+                            ... on VirtualProduct { options { uid } }
+                            ... on SimpleProduct { options { uid } }
+                            ... on ConfigurableProduct { options { uid } }
+                            ... on BundleProduct { options { uid } }
+                            ... on DownloadableProduct { options { uid } }
                         }
                     }
                 }`
@@ -135,7 +139,7 @@ export default {
             }
 
             // Skip if already transformed
-            if (sku in item) {
+            if ('sku' in item) {
                 return item
             }
 
