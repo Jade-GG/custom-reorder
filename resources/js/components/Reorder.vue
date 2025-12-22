@@ -83,7 +83,7 @@ export default {
                 return false
             }
 
-            let item = this.transformedItems.find(item => item.sku == currentItem.sku))
+            let item = this.transformedItems.find(item => item.sku == currentItem.sku)
             if (item && (item.entered_options || item.selected_options)) {
                 return false
             }
