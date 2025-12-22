@@ -20,7 +20,7 @@ class CustomReorderServiceProvider extends ServiceProvider
 
     public function bootViews() : self
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-cr');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-reorder');
 
         return $this;
     }

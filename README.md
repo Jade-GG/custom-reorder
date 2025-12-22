@@ -17,7 +17,45 @@ php artisan vendor:publish --tag=rapidez-custom-reorder-config
 
 ## Usage
 
-This package will not work out of the box, however it contains a few blade components that will help make it easy.
+This package will not work out of the box, however it contains a few blade components that will help make it easy. To set up this package you should do the following:
+
+- Add the `x-rapidez-reorder::button.reorder` to your order page, replacing the typical "Order again" button. When using checkout theme you can put it inside of your `button` section, like so:
+```blade
+@section('button')
+    <x-rapidez-reorder::button.reorder>
+        @lang('Order again')
+    </x-rapidez-reorder::button.reorder>
+@endsection
+```
+
+- Wrap the `x-rapidez-reorder::reorderable` component around your products table with a `v-bind:items` containing your items. If you're not using the standard magento order data, ideally the items should be in the same format as [OrderItem in the GraphQL API](https://developer.adobe.com/commerce/webapi/graphql-api/index.html#definition-OrderItem). If you can't or won't add the `entered_options` and `selected_options`, any configurable items will be grayed out.
+
+- Then, wrap every individual item in your list with `x-rapidez-reorder::item` to allow the checkboxes and transparency to appear. Be aware that this wraps a `label` element around your item, which [may be impactful for any other interactive elements like anchor tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label#accessibility). This should end up looking something like this:
+```blade
+    <x-rapidez-reorder::reorderable v-bind:items="order.items">
+        <ul>
+            <li v-for="item in order.items">
+                <x-rapidez-reorder::item>
+                    [...]
+                </x-rapidez-reorder::item>
+            </li>
+        </ul>
+    </x-rapidez-reorder::reorderable>
+```
+
+- Optionally, you can show why certain items are grayed out using the `x-rapidez-reorder::availability` component. You can place this anywhere in the list of items, but our recommendation would be to place this below the product options and/or the SKU.
+
+- Finally, you need to add the `x-rapidez-reorder::button.add-to-cart` component at the very bottom of the `reorderable` component. You can use `reorderSlotScope.added` as a Vue variable to determine what text your button should show. Note that this component is sticky by default, so adjust your frontend accordingly if needed. For example:
+```blade
+        [...]
+        <x-rapidez-reorder::button.add-to-cart>
+            <template v-if="reorderSlotScope.added">@lang('Added')</template>
+            <template v-else>@lang('Add to cart')</template>
+        </x-rapidez-reorder::button.add-to-cart>
+    </x-rapidez-reorder::reorderable>
+```
+
+And that's it!
 
 ## License
 
