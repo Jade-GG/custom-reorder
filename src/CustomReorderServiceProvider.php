@@ -18,7 +18,8 @@ class CustomReorderServiceProvider extends ServiceProvider
         $this
             ->bootComposers()
             ->bootViews()
-            ->bootPublishables();
+            ->bootPublishables()
+            ->bootTranslations();
     }
 
     protected function bootComposers(): static
@@ -44,6 +45,13 @@ class CustomReorderServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/rapidez/custom_reorder.php' => config_path('rapidez/custom_reorder.php'),
         ], 'rapidez-custom-reorder-config');
+
+        return $this;
+    }
+
+    protected function bootTranslations(): self
+    {
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../lang');
 
         return $this;
     }

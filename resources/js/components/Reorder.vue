@@ -114,7 +114,7 @@ export default {
                 )
                 await this.updateCart({}, response)
 
-                Notify(window.config.translations.cart.add_selected, 'success', [], window.url('/cart'))
+                Notify(window.config.custom_reorder.add_selected, 'success', [], window.url('/cart'))
                 this.added = true
                 setTimeout(() => this.added = false, 3000)
             } catch(error) {
