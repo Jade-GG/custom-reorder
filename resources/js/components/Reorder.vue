@@ -58,11 +58,7 @@ export default {
                         items {
                             sku
                             __typename
-                            ... on VirtualProduct { options { uid } }
-                            ... on SimpleProduct { options { uid } }
-                            ... on ConfigurableProduct { options { uid } }
-                            ... on BundleProduct { options { uid } }
-                            ... on DownloadableProduct { options { uid } }
+                            ... on CustomizableProductInterface { options { uid } }
                         }
                     }
                 }`
@@ -79,7 +75,7 @@ export default {
         },
 
         isUnconfigured(currentItem) {
-            if (!currentItem.options && currentItem.__typename !== 'ConfigurableProduct') {
+            if (!currentItem.options?.length && currentItem.__typename !== 'ConfigurableProduct') {
                 return false
             }
 
