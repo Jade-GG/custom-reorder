@@ -28,6 +28,10 @@ export default {
         if (this.items) {
             this.getMatchingProducts()
         }
+
+        this.$root.$on('reorder-all', () => {
+            this.selectedItems = [...this.matchingItems]
+        })
     },
 
     watch: {
