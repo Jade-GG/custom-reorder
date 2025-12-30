@@ -62,7 +62,7 @@ export default {
                         items {
                             sku
                             __typename
-                            ... on CustomizableProductInterface { options { uid } }
+                            ... on CustomizableProductInterface { options { required } }
                         }
                     }
                 }`
@@ -79,7 +79,10 @@ export default {
         },
 
         isUnconfigured(currentItem) {
-            if (!currentItem.options?.length && currentItem.__typename !== 'ConfigurableProduct') {
+            let options = (currentItem.options ?? [])
+                .filter(option => option.required)
+
+            if (!options.length && currentItem.__typename !== 'ConfigurableProduct') {
                 return false
             }
 
