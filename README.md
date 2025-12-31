@@ -17,7 +17,8 @@ php artisan vendor:publish --tag=rapidez-custom-reorder-config
 
 ## Usage
 
-> [!IMPORTANT] You will need to make sure that the `SKU` field can be filtered by. This means that `Visible in Advanced Search` needs to be enabled on this attribute.
+> [!IMPORTANT]
+> You will need to make sure that the `SKU` field can be filtered by. This means that `Visible in Advanced Search` needs to be enabled on this attribute.
 
 This package will not work out of the box, however it contains a few blade components that will help make it easy. To set up this package you should do the following:
 
